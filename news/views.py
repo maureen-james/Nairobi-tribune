@@ -16,6 +16,7 @@ def news_today(request):
 
     if request.method == 'POST':
         form = NewsLetterForm(request.POST)
+        news = Article.days_news(date)
         if form.is_valid():
             print('valid')
     else:

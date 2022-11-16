@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, Http404
 import datetime as dt
-from .models import Article
+# from .models import Article
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import NewsLetterForm
 # Create your views here.

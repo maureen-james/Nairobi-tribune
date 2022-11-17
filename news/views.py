@@ -4,24 +4,52 @@ import datetime as dt
 from .models import Article
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import NewsLetterForm
-
+from newsapi import NewsApiClient 
 
 # Create your views here.
+def home(request):
+    newsapi = NewsApiClient(api_key='yourapikey')
+    topnews = newsapi.get_top_headlines('cnn')   # source=ndtv, bbc-news, cnn,techcrunch,foxnews.
+
+    latest = topnews['articles']
+    print(topnews)
+    title = []
+    desc = []
+    url = []
+    author = []
+    date = []
+
+    for i in range(len(latest)):
+        news = latest[i]
+
+        title.append(news['title'])
+        desc.append(news['description'])
+        url.append(news['url'])
+        author.append(news['author'])
+        date.append(news['publishedAt'])
+
+    all_news = zip(title, desc, url, author, date)
+
+    context = {
+        'all_news': all_news
+    }
+
+    return render(request, "all-news/index.html", context)
 
 
 def news_today(request):
     date = dt.date.today()
-    # return render(request, 'all-news/today-news.html',{'date': date})
+    news = Article.todays_news()
+
   
 
     if request.method == 'POST':
         form = NewsLetterForm(request.POST)
-        news = Article.days_news(date)
         if form.is_valid():
             print('valid')
     else:
         form = NewsLetterForm()
-    return render(request, 'all-news/today-news.html', {"date": date,"news":news,"letterForm":form})
+    return render(request, 'all-news/todays-news.html', {"date": date,"news":news,"letterForm":form})
 
 
 
@@ -40,10 +68,7 @@ def past_days_news(request, past_date):
     news = Article.days_news(date)
     return render(request, 'all-news/past-news.html',{"date": date,"news":news})
 
-def news_today(request):
-    date = dt.date.today()
-    news = Article.todays_news()
-    return render(request, 'all-news/today-news.html', {"date": date,"news":news})  
+
 
 def search_results(request):
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>News for you</title>
+
+    <style>
+        body {
+            margin: 0rem 20rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .header {
+            margin-top: 5px;
+            width: 100%;
+            border-radius: 5px;
+            padding: 10px;
+            background: darkgrey;
+            text-align: center;
+        }
+        .container {
+            margin: 0;
+            padding: 10px;
+        }
+
+
+        .list {
+            margin: 8px 5px;
+            border: 1px solid #111111c9;
+            padding: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1><a href="{% url 'home' %}">What's the News?</a></h1>
+    </div>
+
+    <div class="container">
+        {% for title, description, url, author, date in all_news %}
+
+        <div class="list">
+            <a href="{{ url }}">
+                <h4 class="post-title">{{ title }}</h2>
+            </a>
+            <p class="post-subtitle">{{ description }}</p>
+
+            <p>Posted by <a href="#">{{ author }}</a> on {{ date }}</p>
+        </div>
+
+        <!-- Divider-->
+
+        {% endfor %}
+
+    </div>
+</body>
+
+</html>

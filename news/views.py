@@ -8,7 +8,7 @@ from newsapi import NewsApiClient
 
 # Create your views here.
 def home(request):
-    newsapi = NewsApiClient(api_key='yourapikey')
+    newsapi = NewsApiClient(api_key='90ebc1f08f0c4367b67eeeb0164a5e7b')
     topnews = newsapi.get_top_headlines('cnn')   # source=ndtv, bbc-news, cnn,techcrunch,foxnews.
 
     latest = topnews['articles']
